@@ -17,6 +17,8 @@
 
 - [dags/flats_price_clean.py](dags/flats_price_clean.py) - dag для 2 задания (clean_flats_price)
 
+[notebooks/cleaning.ipynb](notebooks/cleaning.ipynb) - ноутбук с очисткой данных для 2 задания 
+
 ..............................................................................................
 
 Решение 3 задания находится в следующих папках и файлах:
