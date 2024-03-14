@@ -1,0 +1,9 @@
+index_col: 'flat_id'
+target_col: 'price'
+one_hot_drop: 'if_binary'
+n_splits: 5
+metrics: ['neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error']
+n_jobs: -1
+iterations: 2
+depth: 2
+loss_function: 'RMSE'
