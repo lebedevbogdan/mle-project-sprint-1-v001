@@ -12,7 +12,7 @@ def evaluate_model():
     with open('models/fitted_model.pkl', 'rb') as fd:
         pipeline = joblib.load(fd)
         
-    data = pd.read_csv('data/initial_data.csv')
+    data = pd.read_csv('data/prepared_data.csv')
 
     cv_strategy = StratifiedKFold(n_splits=params['n_splits'])
     cv_res = cross_validate(

@@ -47,7 +47,7 @@ def fit_model():
     )
     pipeline.fit(data, data[params['target_col']]) 
     
-
+    data.to_csv('data/prepared_data.csv', index=None)
     os.makedirs('models', exist_ok=True)
     with open('models/fitted_model.pkl', 'wb') as fd:
         joblib.dump(pipeline, fd) 

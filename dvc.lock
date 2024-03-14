@@ -1,0 +1,89 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python scripts/data.py
+    deps:
+    - path: scripts/data.py
+      hash: md5
+      md5: 52a1d8b2b998fab4383d486e120a0397
+      size: 993
+    params:
+      params.yaml:
+        index_col: flat_id
+    outs:
+    - path: data/initial_data.csv
+      hash: md5
+      md5: 9fdb3d0e44e84d40e6ada0e687ee1042
+      size: 12370688
+      cloud:
+        my_storage:
+          etag: 9fdb3d0e44e84d40e6ada0e687ee1042
+          version_id: 000613A2A4F9BD79
+  fit_model:
+    cmd: python scripts/fit.py
+    deps:
+    - path: data/initial_data.csv
+      hash: md5
+      md5: 9fdb3d0e44e84d40e6ada0e687ee1042
+      size: 12370688
+    - path: scripts/fit.py
+      hash: md5
+      md5: 7de9cc9520f563a8b4bba1fb97a549d9
+      size: 1794
+    params:
+      params.yaml:
+        depth: 2
+        iterations: 2
+        loss_function: RMSE
+        one_hot_drop: if_binary
+        target_col: price
+    outs:
+    - path: data/prepared_data.csv
+      hash: md5
+      md5: cdd316e0b4ff147de387ca7b39fcd0cf
+      size: 12630558
+      cloud:
+        my_storage:
+          etag: cdd316e0b4ff147de387ca7b39fcd0cf
+          version_id: 000613A2A4F9F0EE
+    - path: models/fitted_model.pkl
+      hash: md5
+      md5: 9e3737fe3c200f390897cdd2427609f7
+      size: 11961
+      cloud:
+        my_storage:
+          etag: 9e3737fe3c200f390897cdd2427609f7
+          version_id: 000613A2A4E58D44
+  evaluate_model:
+    cmd: python scripts/evaluate.py
+    deps:
+    - path: data/prepared_data.csv
+      hash: md5
+      md5: cdd316e0b4ff147de387ca7b39fcd0cf
+      size: 12630558
+    - path: models/fitted_model.pkl
+      hash: md5
+      md5: 9e3737fe3c200f390897cdd2427609f7
+      size: 11961
+    - path: scripts/evaluate.py
+      hash: md5
+      md5: 123853dbe13663a0617b70e4053f7a24
+      size: 908
+    params:
+      params.yaml:
+        metrics:
+        - neg_mean_absolute_error
+        - neg_mean_squared_error
+        - neg_root_mean_squared_error
+        n_jobs: -1
+        n_splits: 5
+        target_col: price
+    outs:
+    - path: cv_results/cv_res.json
+      hash: md5
+      md5: 15b9530f2228bcd630bf55be48a4c455
+      size: 187
+      cloud:
+        my_storage:
+          etag: 15b9530f2228bcd630bf55be48a4c455
+          version_id: 000613A2A4F3D104
